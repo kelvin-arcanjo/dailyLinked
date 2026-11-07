@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.static('src/public'));
 
 app.get('/', (req, res) => {
-    res.send({ status: 'LinkedPulse API is running 🚀' });
+    res.send({ status: 'LinkedPulse API is running ' });
 });
 
 app.listen(PORT, () => {
