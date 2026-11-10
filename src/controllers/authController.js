@@ -1,5 +1,8 @@
+const axios = require('axios');
+
 // LinkedIn OAuth 2.0 configuration variables from environment...
 const CLIENT_ID = process.env.LINKEDIN_CLIENT_ID;
+const CLIENT_SECRET = process.env.LINKEDIN_CLIENT_SECRET;
 const REDIRECT_URI = process.env.LINKEDIN_REDIRECT_URI;
 
 
@@ -27,12 +30,34 @@ const handleLinkedInCallback = async (req, res) => {
     }
     
     try {
-        // Exchange the code for an Access Token...
-        return res.status(200).json({ 
-            message: 'Authorization code received successfully!',
-            code 
+       // URL-encoded payload for the access token request...
+       const tokenParams = new URLSearchParams({
+            grant_type: 'authorization_code',
+            code,
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            redirect_uri: REDIRECT_URI
         });
-        
+
+        // Server-to-Server to exchange autorization code for access token...
+        const tokenResponse = await axios.post(
+            'https://www.linkedin.com/oauth/v2/accessToken',
+            tokenParams.toString(),
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+        );
+
+        const acessToken = tokenResponse.data.access_token;
+
+        // Return acess token temporarily to test endpoint execution...
+        return res.status(200).json({
+            message: 'Acess Token obtained successfully!',
+            access_token: acessToken
+        })
+
     } catch (err) {
         console.error('Error during LinkedIn authentication:', err);
         return res.status(500).json({ error: 'Internal server error during authentication' });
@@ -42,4 +67,4 @@ const handleLinkedInCallback = async (req, res) => {
 module.exports = {
     redirectToLinkedIn,
     handleLinkedInCallback
-};
+}; 
