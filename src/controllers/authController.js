@@ -52,6 +52,15 @@ const handleLinkedInCallback = async (req, res) => {
 
         const acessToken = tokenResponse.data.access_token;
 
+        // Fetch user profile data from Linkedin OpenID endopoint using Bearer Token...
+        const profileResponse = await axios.get('https://api.linkedin.com/v2/userinfo' , {
+            headers: {
+                Authorization: `Bearer ${acessToken}`
+            }
+        })
+
+        const { sub: linkedin, name, email, picture } = profileResponse.data
+
         // Return acess token temporarily to test endpoint execution...
         return res.status(200).json({
             message: 'Acess Token obtained successfully!',
