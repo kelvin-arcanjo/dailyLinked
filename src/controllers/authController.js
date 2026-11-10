@@ -13,6 +13,33 @@ const redirectToLinkedIn = (req, res) => {
     res.redirect(linkedinAuthUrl);
 };
 
+// Handles the callback from LinkedIn after user authorization...
+
+const handleLinkedInCallback = async (req, res) => {
+    const { code, error } = req.query;
+    
+    if (error) {
+        return res.status(400).json({ error: 'Authorization failed or denied by user' });
+    }
+    
+    if (!code) {
+        return res.status(400).json({ error: 'Authorization code not provided' });
+    }
+    
+    try {
+        // Exchange the code for an Access Token...
+        return res.status(200).json({ 
+            message: 'Authorization code received successfully!',
+            code 
+        });
+        
+    } catch (err) {
+        console.error('Error during LinkedIn authentication:', err);
+        return res.status(500).json({ error: 'Internal server error during authentication' });
+    }
+};
+
 module.exports = {
     redirectToLinkedIn,
+    handleLinkedInCallback
 };

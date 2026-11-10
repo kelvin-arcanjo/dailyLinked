@@ -12,9 +12,9 @@ app.get('/', (req, res) => {
     res.send({ status: 'LinkedPulse API is running ' });
 });
 
-
 // Auth Routes...
 app.get('/auth/linkedin', redirectToLinkedIn);
+app.get('/auth/linkedin/callback', handleLinkedInCallback);
 
 // Server entry point...
 app.listen(PORT, () => {
