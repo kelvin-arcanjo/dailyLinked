@@ -1,4 +1,4 @@
-// LinkedIn OAuth 2.0 configuration variables from environment
+// LinkedIn OAuth 2.0 configuration variables from environment...
 const CLIENT_ID = process.env.LINKEDIN_CLIENT_ID;
 const REDIRECT_URI = process.env.LINKEDIN_REDIRECT_URI;
 
