@@ -1,4 +1,5 @@
 const axios = require('axios');
+const db = require('../config/db.js');
 
 // LinkedIn OAuth 2.0 configuration variables from environment...
 const CLIENT_ID = process.env.LINKEDIN_CLIENT_ID;
