@@ -62,10 +62,27 @@ const handleLinkedInCallback = async (req, res) => {
 
         const { sub: linkedin, name, email, picture } = profileResponse.data
 
+        // Upsert user data into PostgreSQL database...
+        const queryText = `
+            INSERT INTO users (linkedin_id, name, email, avatar_url, update_at)
+            VALUES (1$, 2$, 3$, 4$, NOW())
+            ON CONFLICT (linkedin_id)
+            DO UPDATE SET
+                name = EXCLUDED.name,
+                email = EXCLUDED.email,
+                avatar_url = EXCLUDED.avatar_url,
+                update_at = NOW()
+            RETURNING *
+        `
+
+        const queryValues = [linkedinId, name, email, picture]
+        const dbResult = await db.query(queryText, queryValues)
+        const user = dbResult.rows[0]
+
         // Return acess token temporarily to test endpoint execution...
         return res.status(200).json({
-            message: 'Acess Token obtained successfully!',
-            access_token: acessToken
+            message: 'Authentication and database synchronization successful!',
+            user
         })
 
     } catch (err) {
