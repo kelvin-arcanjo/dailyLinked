@@ -33,8 +33,7 @@ const handleLinkedInCallback = async (req, res) => {
     try {
        // URL-encoded payload for the access token request...
        const tokenParams = new URLSearchParams({
-            grant_type: 'authorization_code',
-            code,
+            grant_type: 'authorization_code', code,
             client_id: CLIENT_ID,
             client_secret: CLIENT_SECRET,
             redirect_uri: REDIRECT_URI
