@@ -79,6 +79,17 @@ const handleLinkedInCallback = async (req, res) => {
         const dbResult = await db.query(queryText, queryValues)
         const user = dbResult.rows[0]
 
+        // Create a JWT for internal session management;
+        const token = jwt.sign(
+            {
+                userId: user.id,
+                email: user.email,
+                linkedIn: user.linkedin_id
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN || '7d'}
+        )
+
         // Return acess token temporarily to test endpoint execution...
         return res.status(200).json({
             message: 'Authentication and database synchronization successful!',
