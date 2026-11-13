@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.static('src/public'));
 
 app.get('/', (req, res) => {
-    res.send({ status: 'LinkedPulse API is running ' });
+    res.send({ status: 'dailyLinked API is running ' });
 });
 
 // Auth Routes...
