@@ -93,6 +93,7 @@ const handleLinkedInCallback = async (req, res) => {
         // Return acess token temporarily to test endpoint execution...
         return res.status(200).json({
             message: 'Authentication and database synchronization successful!',
+            token,
             user
         })
 
