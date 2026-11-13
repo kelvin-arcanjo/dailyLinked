@@ -1,5 +1,6 @@
 const axios = require('axios');
 const db = require('../config/db.js');
+const jwt = require('jsonwebtoken');
 
 // LinkedIn OAuth 2.0 configuration variables from environment...
 const CLIENT_ID = process.env.LINKEDIN_CLIENT_ID;
