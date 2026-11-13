@@ -84,7 +84,7 @@ const handleLinkedInCallback = async (req, res) => {
             {
                 userId: user.id,
                 email: user.email,
-                linkedIn: user.linkedin_id
+                linkedinId: user.linkedin_id
             },
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES_IN || '7d'}
