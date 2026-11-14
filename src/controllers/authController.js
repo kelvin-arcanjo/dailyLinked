@@ -60,7 +60,7 @@ const handleLinkedInCallback = async (req, res) => {
             }
         })
 
-        const { sub: linkedin, name, email, picture } = profileResponse.data
+        const { sub: linkedinId, name, email, picture } = profileResponse.data
 
         // Upsert user data into PostgreSQL database...
         const queryText = `
