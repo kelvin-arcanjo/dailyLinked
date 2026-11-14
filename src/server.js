@@ -1,6 +1,6 @@
 const express = require('express');
 require('dotenv').config();
-const {redirectToLinkedin} = require('./controllers/authController');
+const { redirectToLinkedIn, handleLinkedInCallback } = require('./controllers/authController');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
