@@ -63,21 +63,30 @@ const handleLinkedInCallback = async (req, res) => {
         const { sub: linkedinId, name, email, picture } = profileResponse.data
 
         // Upsert user data into PostgreSQL database...
-        const queryText = `
-            INSERT INTO users (linkedin_id, name, email, avatar_url, update_at)
-            VALUES ($1, $2, $3, $4, NOW())
-            ON CONFLICT (linkedin_id)
-            DO UPDATE SET
-                name = EXCLUDED.name,
-                email = EXCLUDED.email,
-                avatar_url = EXCLUDED.avatar_url,
-                update_at = NOW()
-            RETURNING *
-        `
+        //const queryText = `
+            //INSERT INTO users (linkedin_id, name, email, avatar_url, update_at)
+            //VALUES ($1, $2, $3, $4, NOW())
+            //ON CONFLICT (linkedin_id)
+            //DO UPDATE SET
+                //name = EXCLUDED.name,
+                //email = EXCLUDED.email,
+                //avatar_url = EXCLUDED.avatar_url,
+                //update_at = NOW()
+            //RETURNING *
+        //`
 
-        const queryValues = [linkedinId, name, email, picture]
-        const dbResult = await db.query(queryText, queryValues)
-        const user = dbResult.rows[0]
+        //const queryValues = [linkedinId, name, email, picture]
+        //const dbResult = await db.query(queryText, queryValues)
+       // const user = dbResult.rows[0]
+
+       // Temprarily mocking user data for testing purposes...
+       const user = {
+        id: 1,
+        linkedin_id: linkedinId,
+        name:name,
+        email: email,
+        avatar_url: picture 
+       }
 
         // Create a JWT for internal session management;
         const token = jwt.sign(
@@ -93,8 +102,12 @@ const handleLinkedInCallback = async (req, res) => {
         // Return acess token temporarily to test endpoint execution...
         return res.status(200).json({
             message: 'Authentication and database synchronization successful!',
-            token,
-            user
+            token: token,
+            user: {
+                name: user.name,
+                email: user.email,
+                avatar_url: user.avatar_url 
+            }
         })
 
     } catch (err) {
