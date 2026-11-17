@@ -71,7 +71,7 @@ const handleLinkedInCallback = async (req, res) => {
                 //name = EXCLUDED.name,
                 //email = EXCLUDED.email,
                 //avatar_url = EXCLUDED.avatar_url,
-                //update_at = NOW()
+                //updated_at = NOW()
             //RETURNING *
         //`
 
