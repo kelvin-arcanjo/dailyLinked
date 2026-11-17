@@ -63,21 +63,21 @@ const handleLinkedInCallback = async (req, res) => {
         const { sub: linkedinId, name, email, picture } = profileResponse.data
 
         // Upsert user data into PostgreSQL database...
-        //const queryText = `
-            //INSERT INTO users (linkedin_id, name, email, avatar_url, update_at)
-            //VALUES ($1, $2, $3, $4, NOW())
-            //ON CONFLICT (linkedin_id)
-            //DO UPDATE SET
-                //name = EXCLUDED.name,
-                //email = EXCLUDED.email,
-                //avatar_url = EXCLUDED.avatar_url,
-                //updated_at = NOW()
-            //RETURNING *
-        //`
+        const queryText = `
+            INSERT INTO users (linkedin_id, name, email, avatar_url, update_at)
+            VALUES ($1, $2, $3, $4, NOW())
+            ON CONFLICT (linkedin_id)
+            DO UPDATE SET
+                name = EXCLUDED.name,
+                email = EXCLUDED.email,
+                avatar_url = EXCLUDED.avatar_url,
+                updated_at = NOW()
+            RETURNING *
+        `
 
-        //const queryValues = [linkedinId, name, email, picture]
-        //const dbResult = await db.query(queryText, queryValues)
-       // const user = dbResult.rows[0]
+        const queryValues = [linkedinId, name, email, picture]
+        const dbResult = await db.query(queryText, queryValues)
+        const user = dbResult.rows[0]
 
         // Create a JWT for internal session management;
         const token = jwt.sign(
