@@ -79,15 +79,6 @@ const handleLinkedInCallback = async (req, res) => {
         //const dbResult = await db.query(queryText, queryValues)
        // const user = dbResult.rows[0]
 
-       // Temprarily mocking user data for testing purposes...
-       const user = {
-        id: 1,
-        linkedin_id: linkedinId,
-        name:name,
-        email: email,
-        avatar_url: picture 
-       }
-
         // Create a JWT for internal session management;
         const token = jwt.sign(
             {
