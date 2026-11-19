@@ -64,7 +64,7 @@ const handleLinkedInCallback = async (req, res) => {
 
         // Upsert user data into PostgreSQL database...
         const queryText = `
-            INSERT INTO users (linkedin_id, name, email, avatar_url, update_at)
+            INSERT INTO users (linkedin_id, name, email, avatar_url, updated_at)
             VALUES ($1, $2, $3, $4, NOW())
             ON CONFLICT (linkedin_id)
             DO UPDATE SET
