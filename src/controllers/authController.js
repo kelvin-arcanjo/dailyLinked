@@ -107,7 +107,20 @@ const handleLinkedInCallback = async (req, res) => {
     }
 };
 
+async function getProfile(req , res) {
+    try {
+        const userId = req.user.userId
+
+        comst
+    }
+
+    if (rows.length === 0){
+        return res.status(404).json({ user: result.rows[0] }) 
+    }
+}
+
 module.exports = {
     redirectToLinkedIn,
-    handleLinkedInCallback
+    handleLinkedInCallback,
+    getProfile
 }; 
