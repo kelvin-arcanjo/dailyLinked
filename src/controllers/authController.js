@@ -111,11 +111,24 @@ async function getProfile(req , res) {
     try {
         const userId = req.user.userId
 
-        comst
-    }
+        const result = await pool.query(
+            'SELECT id, linkedin_id, name, email, avatar_url, created_at FROM users WHERE id = $1',
+            [userId]
+        )
 
-    if (rows.length === 0){
-        return res.status(404).json({ user: result.rows[0] }) 
+        if (result.rows.length === 0){
+            return res.status(404).json({ message: 'User not found' }) 
+        }
+
+        return res.status(200).json({
+            user: result.rows[0]
+        })
+
+    } catch (err) {
+        console.log('Error user profile:', err)
+        return res.sattus(500).json({
+            error: 'Internal server error'
+        })
     }
 }
 
