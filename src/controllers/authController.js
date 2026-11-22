@@ -126,7 +126,7 @@ async function getProfile(req , res) {
 
     } catch (err) {
         console.log('Error user profile:', err)
-        return res.sattus(500).json({
+        return res.status(500).json({
             error: 'Internal server error'
         })
     }
