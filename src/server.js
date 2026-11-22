@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 // Auth Routes...
 app.get('/auth/linkedin', redirectToLinkedIn);
 app.get('/auth/linkedin/callback', handleLinkedInCallback);
+app.get('/profile', verifyToken, getProfile);
 
 // Server entry point...
 app.listen(PORT, () => {
