@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const { redirectToLinkedIn, handleLinkedInCallback, getProfile } = require('./controllers/authController');
-const { verifyToken} = require('./middlewares/authMiddleware.js')
+const { verifyToken } = require('./middlewares/authMiddleware')
 
 const app = express();
 const PORT = process.env.PORT || 3000;
