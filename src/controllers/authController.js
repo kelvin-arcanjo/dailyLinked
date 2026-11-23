@@ -51,7 +51,7 @@ const handleLinkedInCallback = async (req, res) => {
             }
         );
 
-        const acessToken = tokenResponse.data.access_token;
+        const accessToken = tokenResponse.data.access_token;
         const expiresIn = tokenResponse.data.expires_in;
         const tokenExpiresAt = expiresIn
             ? new Date(Date.now() + expiresIn * 1000)
