@@ -52,6 +52,10 @@ const handleLinkedInCallback = async (req, res) => {
         );
 
         const acessToken = tokenResponse.data.access_token;
+        const expiresIn = tokenResponse.data.expires_in;
+        const tokenExpiresAt = expiresIn
+            ? new Date(Date.now() + expiresIn * 1000)
+            : null; 
 
         // Fetch user profile data from Linkedin OpenID endopoint using Bearer Token...
         const profileResponse = await axios.get('https://api.linkedin.com/v2/userinfo' , {
@@ -64,18 +68,28 @@ const handleLinkedInCallback = async (req, res) => {
 
         // Upsert user data into PostgreSQL database...
         const queryText = `
-            INSERT INTO users (linkedin_id, name, email, avatar_url, updated_at)
-            VALUES ($1, $2, $3, $4, NOW())
+            INSERT INTO users (
+                linkedin_id, 
+                name, 
+                email, 
+                avatar_url, 
+                linkedin_access_token,
+                linkedin_token_expires_at,
+                updated_at
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, NOW())
             ON CONFLICT (linkedin_id)
             DO UPDATE SET
                 name = EXCLUDED.name,
                 email = EXCLUDED.email,
                 avatar_url = EXCLUDED.avatar_url,
+                linkedin_access_token = EXCLUDED.linkedin_access_token,
+                linkedin_token_expires_at = EXCLUDED.linkedin_token_expires_at,
                 updated_at = NOW()
             RETURNING *
-        `
+        `;
 
-        const queryValues = [linkedinId, name, email, picture]
+        const queryValues = [linkedinId, name, email, picture, accessToken, tokenExpiresAt]
         const dbResult = await db.query(queryText, queryValues)
         const user = dbResult.rows[0]
 
