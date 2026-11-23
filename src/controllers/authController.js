@@ -60,7 +60,7 @@ const handleLinkedInCallback = async (req, res) => {
         // Fetch user profile data from Linkedin OpenID endopoint using Bearer Token...
         const profileResponse = await axios.get('https://api.linkedin.com/v2/userinfo' , {
             headers: {
-                Authorization: `Bearer ${acessToken}`
+                Authorization: `Bearer ${accessToken}`
             }
         })
 
