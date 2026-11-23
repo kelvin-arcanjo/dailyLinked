@@ -111,7 +111,7 @@ async function getProfile(req , res) {
     try {
         const userId = req.user.userId
 
-        const result = await pool.query(
+        const result = await db.query(
             'SELECT id, linkedin_id, name, email, avatar_url, created_at FROM users WHERE id = $1',
             [userId]
         )
