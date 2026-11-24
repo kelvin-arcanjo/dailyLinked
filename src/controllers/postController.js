@@ -1,6 +1,6 @@
 const db = require('../config/db.js');
 
-// Schedule a new post for the authenticated user;
+// Schedule a new post for the authenticated user...
 
 const createPost = async (req, res) => {
     try {
@@ -40,5 +40,30 @@ const createPost = async (req, res) => {
     } catch (err) {
         console.error('Erro ao agendar publicação:', err);
         return res.status(500).json({ error: 'Erro interno do servidor ao agendar publicação.' });
+    }
+};
+
+// Lists all posts from the authenticated user...
+
+const getUserPosts = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+
+        const queryText = `
+            SELECT id, content, scheduled_at, status, linkedin_post_id, error_message, created_at
+            FROM posts
+            WHERE user_id = $1
+            ORDER BY scheduled_at ASC
+        `;
+
+        const result = await db.query(queryText, [userId]);
+
+        return res.status(200).json({
+            posts: result.rows
+        });
+
+    } catch (err) {
+        console.error('Erro ao listar publicações:', err);
+        return res.status(500).json({ error: 'Erro interno do servidor ao listar publicações.' });
     }
 };
