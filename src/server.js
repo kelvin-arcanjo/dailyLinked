@@ -27,5 +27,8 @@ app.get('/posts', verifyToken, getUserPosts);
 // Server entry point...
 app.listen(PORT, () => {
     console.log(`Servidor a rodar na porta ${PORT}`);
+    startScheduler();
 });
+
+
     
