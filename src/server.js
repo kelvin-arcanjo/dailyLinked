@@ -19,6 +19,10 @@ app.get('/auth/linkedin', redirectToLinkedIn);
 app.get('/auth/linkedin/callback', handleLinkedInCallback);
 app.get('/profile', verifyToken, getProfile);
 
+// Post Scheduling Routes...
+app.post('/posts', verifyToken, createPost);
+app.get('/posts', verifyToken, getUserPosts);
+
 // Server entry point...
 app.listen(PORT, () => {
     console.log(`Servidor a rodar na porta ${PORT}`);
