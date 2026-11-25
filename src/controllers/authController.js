@@ -104,16 +104,8 @@ const handleLinkedInCallback = async (req, res) => {
             { expiresIn: process.env.JWT_EXPIRES_IN || '7d'}
         )
 
-        // Return acess token temporarily to test endpoint execution...
-        return res.status(200).json({
-            message: 'Authentication and database synchronization successful!',
-            token: token,
-            user: {
-                name: user.name,
-                email: user.email,
-                avatar_url: user.avatar_url 
-            }
-        })
+        // Redirect back to the frontend with the JWT token in the query string...
+        return res.redirect(`/?token=${token}`);
 
     } catch (err) {
         console.error('Error during LinkedIn authentication:', err);
