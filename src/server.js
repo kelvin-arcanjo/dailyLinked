@@ -3,6 +3,7 @@ require('dotenv').config();
 const { redirectToLinkedIn, handleLinkedInCallback, getProfile } = require('./controllers/authController');
 const { verifyToken } = require('./middlewares/authMiddleware');
 const { createPost, getUserPosts } = require('./controllers/postController');
+const { startScheduler } = require('./jobs/postScheduler');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
