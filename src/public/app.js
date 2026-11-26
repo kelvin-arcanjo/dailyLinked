@@ -110,3 +110,42 @@ const loadPosts = async () => {
         postsListEl.innerHTML = '<p style="color:#721c24;">Erro ao carregar fila de publicações.</p>';
     }
 };
+
+// Submit a new appointment...
+scheduleForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const token = getToken();
+    const content = contentInput.value.trim();
+    const rawDate = scheduledAtInput.value;
+
+    if (!content || !rawDate) return;
+
+    // Converte a data local do input para ISO string (UTC)
+    const scheduled_at = new Date(rawDate).toISOString();
+
+    try {
+        const res = await fetch('/posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ content, scheduled_at })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            showFeedback(data.error || 'Erro ao agendar publicação.', 'error');
+            return;
+        }
+
+        showFeedback('Publicação agendada com sucesso!', 'success');
+        contentInput.value = '';
+        scheduledAtInput.value = '';
+        loadPosts();
+    } catch (err) {
+        console.error(err);
+        showFeedback('Falha de comunicação com o servidor.', 'error');
+    }
+});
