@@ -69,3 +69,44 @@ const loadProfile = async () => {
         logout();
     }
 };
+
+// List all posts schedule and posted...
+const loadPosts = async () => {
+    const token = getToken();
+    if (!token) return;
+
+    try {
+        const res = await fetch('/posts', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const posts = data.posts || [];
+
+        if (posts.length === 0) {
+            postsListEl.innerHTML = '<p style="color:#666;">Ainda não tens publicações agendadas.</p>';
+            return;
+        }
+
+        postsListEl.innerHTML = posts.map(post => {
+            const dateFormatted = new Date(post.scheduled_at).toLocaleString('pt-PT');
+            const badgeClass = `badge-${post.status}`;
+            const errorHtml = post.error_message
+                ? `<div style="color:#721c24; font-size:0.8rem; margin-top:4px;">Erro: ${post.error_message}</div>`
+                : '';
+
+            return `
+                <div class="post-item">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span class="badge ${badgeClass}">${post.status}</span>
+                        <span class="meta">Agendado para: ${dateFormatted}</span>
+                    </div>
+                    <div style="white-space:pre-wrap; font-size:0.95rem;">${post.content}</div>
+                    ${errorHtml}
+                </div>
+            `;
+        }).join('');
+    } catch (err) {
+        console.error('Erro ao carregar posts:', err);
+        postsListEl.innerHTML = '<p style="color:#721c24;">Erro ao carregar fila de publicações.</p>';
+    }
+};
