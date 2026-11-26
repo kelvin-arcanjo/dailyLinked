@@ -156,3 +156,5 @@ setInterval(() => {
         loadPosts();
     }
 }, 15000);
+
+loadProfile();
