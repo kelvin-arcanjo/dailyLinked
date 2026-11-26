@@ -9,3 +9,10 @@ const contentInput = document.getElementById('content');
 const scheduledAtInput = document.getElementById('scheduled-at');
 const feedbackEl = document.getElementById('feedback');
 const postsListEl = document.getElementById('posts-list');
+
+const showFeedback = (message, type = 'success') => {
+    feedbackEl.textContent = message;
+    feedbackEl.className = `alert alert-${type}`;
+    feedbackEl.classList.remove('hidden');
+    setTimeout(() => feedbackEl.classList.add('hidden'), 5000);
+};
