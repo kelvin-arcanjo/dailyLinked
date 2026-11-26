@@ -16,3 +16,11 @@ const showFeedback = (message, type = 'success') => {
     feedbackEl.classList.remove('hidden');
     setTimeout(() => feedbackEl.classList.add('hidden'), 5000);
 };
+
+// Get JWT Token from OAuth and clean URL... 
+const urlParams = new URLSearchParams(window.location.search);
+const urlToken = urlParams.get('token');
+if (urlToken) {
+    localStorage.setItem('dailylinked_token', urlToken);
+    window.history.replaceState({}, document.title, '/');
+}
