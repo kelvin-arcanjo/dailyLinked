@@ -149,3 +149,10 @@ scheduleForm.addEventListener('submit', async (e) => {
         showFeedback('Falha de comunicação com o servidor.', 'error');
     }
 });
+
+// The queue is automatically updated every 15 seconds to reflect the scheduler's status...
+setInterval(() => {
+    if (getToken() && !dashboardView.classList.contains('hidden')) {
+        loadPosts();
+    }
+}, 15000);
