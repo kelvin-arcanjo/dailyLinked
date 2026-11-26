@@ -34,3 +34,38 @@ const logout = () => {
 };
 
 logoutBtn.addEventListener('click', logout);
+
+// Load profile of atutenticated user...
+const loadProfile = async () => {
+    const token = getToken();
+    if (!token) {
+        loginView.classList.remove('hidden');
+        return;
+    }
+
+    try {
+        const res = await fetch('/profile', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (!res.ok) throw new Error('Sessão inválida ou expirada');
+
+        const data = await res.json();
+        const user = data.user || data;
+
+        userName.textContent = user.name || 'Utilizador LinkedIn';
+        userEmail.textContent = user.email || '';
+        if (user.avatar_url) {
+            userAvatar.src = user.avatar_url;
+        } else {
+            userAvatar.style.display = 'none';
+        }
+
+        loginView.classList.add('hidden');
+        dashboardView.classList.remove('hidden');
+        loadPosts();
+    } catch (err) {
+        console.error(err);
+        logout();
+    }
+};
