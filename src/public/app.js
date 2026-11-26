@@ -24,3 +24,13 @@ if (urlToken) {
     localStorage.setItem('dailylinked_token', urlToken);
     window.history.replaceState({}, document.title, '/');
 }
+
+const getToken = () => localStorage.getItem('dailylinked_token');
+
+const logout = () => {
+    localStorage.removeItem('dailylinked_token');
+    dashboardView.classList.add('hidden');
+    loginView.classList.remove('hidden');
+};
+
+logoutBtn.addEventListener('click', logout);
