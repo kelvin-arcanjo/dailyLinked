@@ -18,3 +18,18 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + path.extname(file.originalname));
     }
 });
+
+// File validation filter...
+
+const fileFilter = (req, file, cb) => {
+    const allowedMimes = [
+        'image/jpeg', 'image/png', 'image/gif', 'image/webp',
+        'video/mp4', 'video/quicktime', 'video/webm'
+    ];
+
+    if (allowedMimes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error('Formato não suportado. Envie imagens (JPG, PNG, WEBP, GIF) ou vídeos (MP4, MOV, WEBM).'), false);
+    }
+};
