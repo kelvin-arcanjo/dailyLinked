@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS posts (
     content TEXT NOT NULL,
     scheduled_at TIMESTAMP NOT NULL,
     status VARCHAR (50) DEFAULT 'pending',
+    media_path VARCHAR(500),
+    media_type VARCHAR(20),
     linkedin_post_id VARCHAR(255),
     error_message TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
