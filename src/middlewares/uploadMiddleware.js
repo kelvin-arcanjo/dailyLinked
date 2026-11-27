@@ -33,3 +33,11 @@ const fileFilter = (req, file, cb) => {
         cb(new Error('Formato não suportado. Envie imagens (JPG, PNG, WEBP, GIF) ou vídeos (MP4, MOV, WEBM).'), false);
     }
 };
+
+// Main instance initialization...
+
+const upload = multer({
+    storage,
+    fileFilter,
+    limits: { fileSize: 50 * 1024 * 1024 } // Limite de 50MB
+});
