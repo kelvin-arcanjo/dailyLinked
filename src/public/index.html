@@ -34,6 +34,48 @@
     </style>
 </head>
 <body>
+
+    <div class="container">
+        <!-- login screen -->
+        <div id="login-view" class="card">
+            <h1>dailyLinked</h1>
+            <p class="subtitle">Automatiza e Agenda as tuas publicações técnicas e de projetos no LinkedIn.</p>
+            <a href="/auth/linkedin" class="btn">Entrar com LinkedIn</a>
+        </div>
+
+        <!-- Main Panel-->
+        <div id="dashboard-view" class="hidden">
+            <div class="card">
+                <div class="header-bar">
+                    <div class="user-info">
+                        <img id="user-avatar" src="" alt="Avatar">
+                        <div>
+                            <strong id="user-name">Utilizador</strong><br>
+                            <small id="user-email" style="color:#666;"></small>
+                        </div>
+                    </div>
+                    <button id="logout-btn" class="btn btn-logout">Sair</button>
+                </div>
+
+                <div id="feedback" class="alert hidden"></div>
+
+                <form id="schedule-form">
+                    <label for="content">Conteúdo da publicação</label>
+                    <textarea id="content" placeholder="Partilha a evolução de um projeto, arquitetura ou aprendizagem técnica..." required></textarea>
+
+                    <label for="scheduled-at">Data e hora de publicação</label>
+                    <input type="datetime-local" id="scheduled-at" required>
+
+                    <button type="submit" class="btn">Agendar Publicação</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2 style="margin-top:0; font-size:1.15rem;">Fila de Publicações</h2>
+                <div id="posts-list"><p style="color:#666;">A carregar...</p></div>
+            </div>
+        </div>
+    </div>
     
 </body>
 </html>
